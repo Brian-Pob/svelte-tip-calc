@@ -11,7 +11,7 @@ $: tipPercent = selectedTip > -1 ? selectedTip : 0;
 let numPeople = 2;
 
 $: tipPerPerson = (bill * (tipPercent / 100) / numPeople).toFixed(2);
-$: totalPerPerson = ((bill + (bill * (tipPercent / 100))) / numPeople).toFixed(2);
+$: totalPerPerson = ((bill * (1 + tipPercent / 100)) / numPeople).toFixed(2);
 
 function reset() {
   bill = 0;
@@ -29,8 +29,16 @@ function reset() {
   <form action="">
     <fieldset>
 
-      <label for="bill">Bill</label>
-      <input type="number" name="bill" id="bill" bind:value={bill}>
+      <label>
+        Bill
+
+        <input
+          min="0" step="0.01"
+          inputmode="numeric" pattern="[0-9]*[.,]?[0-9]{2}"
+          type="text" id="bill" bind:value={bill}
+          
+        >
+      </label>
 
       <fieldset>
         <legend>Select Tip %</legend>
@@ -47,6 +55,7 @@ function reset() {
             >
           </label>
         </div>
+
         {/each}
         <div>
           <label>
@@ -56,36 +65,46 @@ function reset() {
               value="-1"
               id="percent-custom"
               bind:group={selectedTip}
-              
             >
-
           </label>
         </div>
         
       </fieldset>
       <div>
-        <input
+        <label>
+          Custom Tip %
+          <input
           bind:value={tipPercent}
-          type="number" name="percentcustom" id="percentcustom"
+          type="text" inputmode="numeric" pattern="[0-9]"
+          name="percentcustom" id="percentcustom"
           disabled={selectedTip != -1}
-        >
-        <label for="percentcustom">Custom</label>
+          min="0"
+          >
+        </label>
       </div>
 
-      <label for="num-people">Number of People</label>
-      <input type="number" name="num-people" id="num-people" bind:value={numPeople}> 
+      <label for="num-people">Number of People
+
+        <input
+          type="number" name="num-people" id="num-people"
+          bind:value={numPeople}
+          min="1"
+        > 
+      </label>
 
     </fieldset>
     <div>
       <div>
-        <p>Tip Amount</p>
-        <p>/ person</p>
-        <p>{tipPerPerson}</p>
+        <p>Tip Amount
+          <span style="display: block;">per person</span>
+        </p>
+        <p>{tipPerPerson !== "NaN" ? `$${tipPerPerson}` : "error"}</p>
       </div>
       <div>
-        <p>Total</p>
-        <p>/ person</p>
-        <p>{totalPerPerson}</p>
+        <p>Total
+          <span style="display: block;">per person</span>
+        </p>
+        <p>{totalPerPerson !== "NaN" ? `$${totalPerPerson}` : "error"}</p>
       </div>
       <button type="button" on:click={reset}>Reset</button>
     </div>
