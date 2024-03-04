@@ -34,9 +34,9 @@ function reset() {
 
         <input
           min="0" step="0.01"
-          inputmode="numeric" pattern="[0-9]*[.,]?[0-9]{2}"
-          type="text" id="bill" bind:value={bill}
-          
+          type="number" name="bill"
+          id="bill" bind:value={bill}
+          pattern="[0-9]*"
         >
       </label>
 
@@ -60,7 +60,7 @@ function reset() {
         <div>
           <label>
             Custom
-            <input 
+            <input
               type="radio" name="tip-percent"
               value="-1"
               id="percent-custom"
@@ -68,14 +68,14 @@ function reset() {
             >
           </label>
         </div>
-        
+
       </fieldset>
       <div>
         <label>
           Custom Tip %
           <input
           bind:value={tipPercent}
-          type="text" inputmode="numeric" pattern="[0-9]"
+          type="number"
           name="percentcustom" id="percentcustom"
           disabled={selectedTip != -1}
           min="0"
@@ -89,7 +89,7 @@ function reset() {
           type="number" name="num-people" id="num-people"
           bind:value={numPeople}
           min="1"
-        > 
+        >
       </label>
 
     </fieldset>
@@ -111,3 +111,10 @@ function reset() {
   </form>
 </section>
 </main>
+
+<style lang="scss">
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    display: none;
+  }
+</style>
