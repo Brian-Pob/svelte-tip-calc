@@ -261,7 +261,6 @@ label:has(input[type='number']) {
   gap: 0.5rem;
   position: relative;
 
-
   & > input {
     text-align: right;
   }
@@ -328,6 +327,13 @@ label:has(input[type='number'])::before {
   & > div {
     width: calc(50% - 0.5rem);
   }
+
+  @media (min-width: 768px) {
+    gap: 0.5rem;
+    & > div {
+      width: calc(33% - 0.25rem);
+    }
+  }
 }
 
 .tip-options > div > label {
@@ -343,6 +349,7 @@ label:has(input[type='number'])::before {
 input[type='radio'] {
   position: absolute;
 }
+
 
 label:has(input[type='radio']:not(:checked)) {
   background: var(--surface-4);
@@ -395,6 +402,22 @@ label:has(input[type='radio']:is(:focus-visible)) {
   color: var(--text-3);
 }
 
+label:has(input[type='radio']),
+.reset-btn{
+  transition: scale 0.1s ease-out,
+    box-shadow 0.1s ease-out;
+
+    &:is(:hover){
+      scale: 1.02;
+      box-shadow: 0 3px 5px 1px var(--shadow-color, gray);
+    }
+
+    &:is(:active){
+      scale: 0.98;
+      box-shadow: none;
+    }
+}
+
 .reset-btn {
   text-transform: uppercase;
   margin-top: 1rem;
@@ -408,23 +431,14 @@ label:has(input[type='radio']:is(:focus-visible)) {
   font-weight: 700;
   width: 100%;
 
-  transition: scale 0.1s ease-out,
-    box-shadow 0.1s ease-out,;
+  --shadow-color: black;
 
   @media (min-width: 768px) {
     margin-top: auto;
     align-self: self-end;
   }
 
-  &:is(:hover){
-    scale: 1.02;
-    box-shadow: 0 3px 5px 1px black;
-  }
 
-  &:is(:active){
-    scale: 0.98;
-    box-shadow: none;
-  }
 }
 
 .visHidden {
