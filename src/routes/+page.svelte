@@ -1,6 +1,7 @@
 <script lang="ts">
+  import {URL} from '../consts';
   import logo from '$lib/images/logo.svg';
-
+  import ogImage from '$lib/images/og-banner-plain-no-tag.png';
   const percentages = [5, 10, 15, 25, 50];
 
   let bill = 0;
@@ -23,6 +24,10 @@
     target.select();
   }
 </script>
+
+<svelte:head>
+  <meta property="og:image" content={`${URL}${ogImage}`} />
+</svelte:head>
 
 <main>
   <h1>
