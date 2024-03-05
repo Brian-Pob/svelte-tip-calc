@@ -266,6 +266,11 @@ input[type='number'] {
   background: hsl(var(--cyan-lighter));
   color: var(--text-2);
   text-align: right;
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: brightness(0.9);
+  }
 }
 
 label:has(input[type='number'])::before {
