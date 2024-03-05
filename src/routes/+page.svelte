@@ -194,6 +194,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 75ch;
+    margin: auto;
   }
 
   h1 {
