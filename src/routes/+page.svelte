@@ -91,7 +91,7 @@
       </label>
     </div>
 
-    <label data-unit="#">
+    <label >
       Number of People
       <span class="error-msg" class:visHidden={!isInvalidPeople}>
         Can't be less than 1
@@ -159,6 +159,7 @@ input::-webkit-inner-spin-button {
 :global(*, *::before, *::after) {
   box-sizing: border-box;
   margin: 0;
+  transition: color 0.1s ease-out, background-color 0.1s ease-out;
 }
 
 :global(body) {
@@ -252,17 +253,31 @@ legend, label {
 }
 
 label:has(input[type='number']) {
+  --cursor: auto;
+  --brightness: 1;
+
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   position: relative;
+
+
   & > input {
     text-align: right;
   }
 }
 
-label:has(input[type="radio"]), input[type='number'] {
+label:has(input[type="radio"]),
+input[type='number'] {
   font-size: 1.5rem;
+}
+
+label:has(input[type="number"]:disabled){
+  color: hsl(var(--cyan-gray) / 0.8);
+  & > input {
+    cursor: not-allowed;
+    background: hsl(var(--cyan-gray) / 0.5);
+  };
 }
 
 input[type='number'] {
@@ -275,10 +290,6 @@ input[type='number'] {
   text-align: right;
   outline-color: hsl(var(--cyan));
 
-  &:disabled {
-    cursor: not-allowed;
-    filter: brightness(0.9);
-  }
 
   &.invalid {
     outline-color: orangered;
@@ -290,7 +301,7 @@ label:has(input[type='number'])::before {
   position: absolute;
   font-size: 1.5rem;
   z-index: 1;
-  color: hsl(var(--cyan-gray) / 0.5);
+  color: hsl(var(--cyan-gray) / 0.8);
   top: 50%;
   left: calc(0.5rem + var(--input-padding));
   content: var(--content);
