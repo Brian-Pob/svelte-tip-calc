@@ -374,14 +374,15 @@ label:has(input[type='radio']:is(:focus-visible)) {
   padding: 1rem 0.5rem;
   border: none;
   border-radius: 0.25rem;
-  box-shadow: 0 5px 2px -2px black;
+
   background: var(--surface-5);
   color: var(--text-5);
   font-size: 1.25rem;
   font-weight: 700;
   width: 100%;
 
-  transition: scale 0.2s ease-in-out;
+  transition: scale 0.1s ease-out,
+    box-shadow 0.1s ease-out,;
 
   @media (min-width: 768px) {
     margin-top: auto;
@@ -390,10 +391,12 @@ label:has(input[type='radio']:is(:focus-visible)) {
 
   &:is(:hover){
     scale: 1.02;
+    box-shadow: 0 3px 5px 1px black;
   }
 
   &:is(:active){
     scale: 0.98;
+    box-shadow: none;
   }
 }
 
