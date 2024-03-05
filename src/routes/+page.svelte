@@ -26,7 +26,7 @@
 </script>
 
 <svelte:head>
-  <meta property="og:image" content={`${URL}${ogImage}`} />
+  <meta property="og:image" content={`https://svelte-tip-calc.vercel.app/${ogImage}`} />
 </svelte:head>
 
 <main>
