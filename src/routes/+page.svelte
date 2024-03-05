@@ -209,7 +209,7 @@ h1 {
 }
 
 section {
-  --inner-padding: 2.5rem;
+  --inner-padding: 1rem;
   --input-padding: 1rem;
   --border-radius: 1rem;
 
@@ -219,7 +219,7 @@ section {
 
   border-radius: var(--border-radius) var(--border-radius) 0 0;
   @media (min-width: 768px) {
-    /* border-radius: calc(var(--border-radius) + var(--inner-padding) - 0.7rem); */
+    --inner-padding: 2rem;
     border-radius: var(--border-radius);
   }
 
@@ -230,10 +230,10 @@ section {
       justify-content: space-evenly;
       align-items: stretch;
       gap: 2rem;
-    }
-    & > * {
-      flex-grow: 1;
-      max-width: calc(50% - 1rem);
+      & > * {
+        flex-grow: 1;
+        max-width: calc(50% - 1rem);
+      }
     }
   }
 }
@@ -363,7 +363,6 @@ label:has(input[type='radio']:is(:focus-visible)) {
 .result-container {
   background: var(--surface-4);
   padding: var(--inner-padding);
-  margin-top: calc(var(--inner-padding) * 1.5);
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
@@ -371,7 +370,6 @@ label:has(input[type='radio']:is(:focus-visible)) {
 
   @media (min-width: 768px) {
     padding: calc(var(--inner-padding) * 2.5) calc(var(--inner-padding) * 1.5);
-    margin-top: 0;
   }
 }
 
