@@ -33,7 +33,7 @@
 
 <section>
 <form action="">
-  <fieldset>
+  <fieldset class="tip-inputs">
     <label>
       Bill
       <input
@@ -103,31 +103,38 @@
     </label>
   </fieldset>
 
-  <div class="result">
+  <div class="result-container">
     <div class="result-number">
-      <p>
+      <p class="result-type">
         Tip Amount
         <span style="display: block;">per person</span>
       </p>
+      <p class="result-amount">
       {#if tipPerPerson !== 'NaN'}
-        <p>${tipPerPerson}</p>
+        ${tipPerPerson}
       {:else}
-        <p>error</p>
+        error
       {/if}
+      </p>
     </div>
+
     <div class="result-number">
-      <p>
+      <p class="result-type">
         Total
         <span style="display: block;">per person</span>
       </p>
+      <p class="result-amount">
       {#if totalPerPerson !== 'NaN'}
-        <p>${totalPerPerson}</p>
+        ${totalPerPerson}
       {:else}
-        <p>error</p>
+        error
       {/if}
+      </p>
     </div>
-    <button type="button" on:click={reset}>Reset</button>
+
+    <button class="reset-btn" type="button" on:click={reset}>Reset</button>
   </div>
+
 </form>
 </section>
 </main>
@@ -147,10 +154,13 @@ input::-webkit-inner-spin-button {
 
 :global(body) {
   --cyan: 172 67% 45%;
+
   --cyan-darker: 183 100% 15%;
   --cyan-dark: 186 14% 43%;
+
   --cyan-gray: 186 14% 56%;
   --cyan-light: 185 41% 84%;
+
   --cyan-lighter: 189 41% 97%;
 
   --surface-1: hsl(var(--cyan-light));
@@ -189,10 +199,13 @@ h1 {
 }
 
 section {
-  padding: 1.5rem;
+  --padding: 1.5rem;
+  --border-radius: 1rem;
+
+  padding: var(--padding);
   background: var(--surface-2);
   min-width: 100%;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 fieldset {
@@ -202,7 +215,7 @@ fieldset {
 }
 
 legend {
-  font-size: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 legend, label {
@@ -221,6 +234,12 @@ label:has(input[type='number']) {
 
 label:has(input[type="radio"]), input[type='number'] {
   font-size: 1.5rem;
+}
+
+.tip-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .tip-options {
@@ -242,7 +261,7 @@ label:has(input[type="radio"]), input[type='number'] {
   justify-content: center;
   width: 100%;
   border-radius: 0.25rem;
-  padding-block: 0.25rem;
+  padding-block: 0.50rem;
 }
 
 input[type='radio'] {
@@ -263,6 +282,52 @@ label:has(input[type='radio']:is(:focus-visible)) {
   outline: 2px solid Highlight;
   outline: 2px auto -webkit-focus-ring-color;
   outline-offset: 0.5rem;
+}
+
+.result-container {
+  background: var(--surface-4);
+  padding: var(--padding);
+  margin-top: calc(var(--padding) * 1.5);
+  border-radius: calc(var(--padding) - var(--border-radius));
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-number {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 0.5rem;
+}
+
+.result-type {
+  color: white;
+
+  & > span {
+    color: var(--surface-3);
+  }
+}
+
+.result-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.reset-btn {
+  text-transform: uppercase;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: var(--surface-5);
+  color: var(--text-5);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
 }
 
 /* Credit: Tailwind */
