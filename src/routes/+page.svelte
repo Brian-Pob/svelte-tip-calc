@@ -41,7 +41,6 @@
       <input
         min="0" step="0.01"
         type="number" name="bill" id="bill"
-        pattern="[0-9]*"
         bind:value={bill} on:focus={(e) => { handleInputSelect(e);}}
       />
     </label>
@@ -53,7 +52,6 @@
           <label>
             {percentage.toString() + '%'}
             <input
-              class="sr-only"
               bind:group={selectedTip}
               type="radio"
               name="tip-percent"
@@ -93,7 +91,7 @@
 
     <label >
       Number of People
-      <span class="error-msg" class:visHidden={!isInvalidPeople}>
+      <span class="error-msg" class:vis-hidden={!isInvalidPeople}>
         Can't be less than 1
       </span>
       <input
@@ -113,7 +111,7 @@
   <!-- .tip-inputs -->
 
   <div class="result-container">
-    <div class="result-number">
+  <div class="result-info">
       <p class="result-type">
         Tip Amount
         <span style="display: block;">per person</span>
@@ -127,7 +125,7 @@
       </p>
     </div>
 
-    <div class="result-number">
+    <div class="result-info">
       <p class="result-type">
         Total
         <span style="display: block;">per person</span>
@@ -222,18 +220,18 @@ section {
     --inner-padding: 2rem;
     border-radius: var(--border-radius);
   }
+}
 
-  & > form {
-    @media (min-width: 768px) {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      align-items: stretch;
-      gap: 2rem;
-      & > * {
-        flex-grow: 1;
-        max-width: calc(50% - 1rem);
-      }
+form {
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 2rem;
+    & > * {
+      flex-grow: 1;
+      max-width: calc(50% - 1rem);
     }
   }
 }
@@ -253,9 +251,6 @@ legend, label {
 }
 
 label:has(input[type='number']) {
-  --cursor: auto;
-  --brightness: 1;
-
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -318,29 +313,18 @@ label:has(input[type='number'])::before {
 }
 
 .tip-options {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  flex-wrap: wrap;
-
-  & > div {
-    width: calc(50% - 0.5rem);
-  }
 
   @media (min-width: 768px) {
-    gap: 0.5rem;
-    & > div {
-      width: calc(33% - 0.25rem);
-    }
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .tip-options > div > label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-content: center;
   width: 100%;
   border-radius: 0.25rem;
   padding-block: 0.50rem;
@@ -348,8 +332,12 @@ label:has(input[type='number'])::before {
 
 input[type='radio'] {
   position: absolute;
+  @extend.sr-only;
 }
 
+label:has(input[type='radio']) {
+  @extend .fancy-hover;
+}
 
 label:has(input[type='radio']:not(:checked)) {
   background: var(--surface-4);
@@ -380,7 +368,7 @@ label:has(input[type='radio']:is(:focus-visible)) {
   }
 }
 
-.result-number {
+.result-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -402,23 +390,8 @@ label:has(input[type='radio']:is(:focus-visible)) {
   color: var(--text-3);
 }
 
-label:has(input[type='radio']),
-.reset-btn{
-  transition: scale 0.1s ease-out,
-    box-shadow 0.1s ease-out;
-
-    &:is(:hover){
-      scale: 1.02;
-      box-shadow: 0 3px 5px 1px var(--shadow-color, gray);
-    }
-
-    &:is(:active){
-      scale: 0.98;
-      box-shadow: none;
-    }
-}
-
 .reset-btn {
+  @extend .fancy-hover;
   text-transform: uppercase;
   margin-top: 1rem;
   padding: 1rem 0.5rem;
@@ -437,16 +410,29 @@ label:has(input[type='radio']),
     margin-top: auto;
     align-self: self-end;
   }
-
-
 }
 
-.visHidden {
+.vis-hidden {
   visibility: hidden;
 }
 .error-msg {
   color: orangered;
   font-size: 1rem;
+}
+
+.fancy-hover{
+  transition: scale 0.1s ease-out,
+    box-shadow 0.1s ease-out;
+
+    &:is(:hover){
+      scale: 1.02;
+      box-shadow: 0 3px 5px 1px var(--shadow-color, gray);
+    }
+
+    &:is(:active){
+      scale: 0.98;
+      box-shadow: none;
+    }
 }
 
 /* Credit: Tailwind */
