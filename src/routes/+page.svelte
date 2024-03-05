@@ -34,7 +34,7 @@
 <section>
 <form action="">
   <fieldset class="tip-inputs">
-    <label>
+    <label data-unit="$">
       Bill
       <input
         min="0" step="0.01"
@@ -67,7 +67,7 @@
           Custom
           <input class="sr-only"
             type="radio" name="tip-percent" value="-1"
-            id="percent-custom"
+            id="custom-percent-radio"
             bind:group={selectedTip}
           />
         </label>
@@ -75,20 +75,20 @@
     </fieldset>
 
     <div>
-      <label>
+      <label data-unit="%">
         Custom Tip %
         <input
           bind:value={tipPercent}
           on:focus={(e) => {
             handleInputSelect(e);
           }}
-          type="number" name="percentcustom" id="percentcustom"
+          type="number" name="custom-percent" id="custom-percent"
           disabled={selectedTip != -1} min="0"
         />
       </label>
     </div>
 
-    <label for="num-people">
+    <label data-unit="#">
       Number of People
       <input
         type="number"
@@ -147,7 +147,7 @@ input::-webkit-inner-spin-button {
   display: none;
 }
 
-:global(*) {
+:global(*, *::before, *::after) {
   box-sizing: border-box;
   margin: 0;
 }
@@ -190,7 +190,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 75ch;
+  max-width: min(75ch, 100%);
   margin: auto;
 }
 
@@ -200,6 +200,7 @@ h1 {
 
 section {
   --padding: 1.5rem;
+  --input-padding: 1rem;
   --border-radius: 1rem;
 
   padding: var(--padding);
@@ -226,7 +227,7 @@ label:has(input[type='number']) {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-
+  position: relative;
   & > input {
     text-align: right;
   }
@@ -236,10 +237,31 @@ label:has(input[type="radio"]), input[type='number'] {
   font-size: 1.5rem;
 }
 
+input[type='number'] {
+  position: relative;
+  border: none;
+  padding: var(--input-padding);
+  border-radius: 0.25rem;
+  background: hsl(var(--cyan-lighter));
+  color: var(--text-2);
+  text-align: right;
+}
+
+label:has(input[type='number'])::before {
+  --content: attr(data-unit);
+  position: absolute;
+  font-size: 1.5rem;
+  z-index: 1;
+  color: hsl(var(--cyan-gray) / 0.5);
+  top: 50%;
+  left: calc(0.5rem + var(--input-padding));
+  content: var(--content);
+}
+
 .tip-inputs {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.125rem;
 }
 
 .tip-options {
