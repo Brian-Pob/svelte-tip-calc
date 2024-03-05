@@ -1,5 +1,4 @@
 <script lang="ts">
-  import {URL} from '../consts';
   import logo from '$lib/images/logo.svg';
   const percentages = [5, 10, 15, 25, 50];
 
@@ -8,6 +7,7 @@
   $: tipPercent = selectedTip > -1 ? selectedTip : 0;
 
   let numPeople = 2;
+  $: isInvalidPeople = numPeople < 1;
 
   $: tipPerPerson = ((bill * (tipPercent / 100)) / numPeople).toFixed(2);
   $: totalPerPerson = ((bill * (1 + tipPercent / 100)) / numPeople).toFixed(2);
@@ -75,7 +75,7 @@
         </label>
       </div>
     </fieldset>
-    <!-- .tip-options -->
+    <!-- .tip-options radio buttons -->
 
     <div>
       <label data-unit="%">
@@ -93,6 +93,9 @@
 
     <label data-unit="#">
       Number of People
+      <span class="error-msg" class:visHidden={!isInvalidPeople}>
+        Can't be less than 1
+      </span>
       <input
         type="number"
         name="num-people"
@@ -102,7 +105,9 @@
         }}
         bind:value={numPeople}
         min="1"
+        class:invalid={isInvalidPeople}
       />
+
     </label>
   </fieldset>
   <!-- .tip-inputs -->
@@ -194,7 +199,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: min(60ch, 100%);
+  max-width: min(70ch, 100%);
   margin: auto;
 }
 
@@ -203,16 +208,17 @@ h1 {
 }
 
 section {
-  --inner-padding: 1.5rem;
+  --inner-padding: 2.5rem;
   --input-padding: 1rem;
   --border-radius: 1rem;
 
   padding: var(--inner-padding);
   background: var(--surface-2);
   min-width: 100%;
-  border-radius: calc(var(--border-radius) + var(--inner-padding)) calc(var(--border-radius) + var(--inner-padding)) 0 0;
 
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
   @media (min-width: 768px) {
+    /* border-radius: calc(var(--border-radius) + var(--inner-padding) - 0.7rem); */
     border-radius: var(--border-radius);
   }
 
@@ -226,6 +232,7 @@ section {
     }
     & > * {
       flex-grow: 1;
+      max-width: calc(50% - 1rem);
     }
   }
 }
@@ -266,10 +273,15 @@ input[type='number'] {
   background: hsl(var(--cyan-lighter));
   color: var(--text-2);
   text-align: right;
+  outline-color: hsl(var(--cyan));
 
   &:disabled {
     cursor: not-allowed;
     filter: brightness(0.9);
+  }
+
+  &.invalid {
+    outline-color: orangered;
   }
 }
 
@@ -288,6 +300,7 @@ label:has(input[type='number'])::before {
   display: flex;
   flex-direction: column;
   gap: 1.125rem;
+  padding-block: 1.5rem;
 
   @media (min-width: 768px) {
     max-width: calc(50% - 1rem);
@@ -403,6 +416,14 @@ label:has(input[type='radio']:is(:focus-visible)) {
     scale: 0.98;
     box-shadow: none;
   }
+}
+
+.visHidden {
+  visibility: hidden;
+}
+.error-msg {
+  color: orangered;
+  font-size: 1rem;
 }
 
 /* Credit: Tailwind */
