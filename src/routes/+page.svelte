@@ -33,7 +33,9 @@
 
 <section>
 <form action="">
+
   <fieldset class="tip-inputs">
+
     <label data-unit="$">
       Bill
       <input
@@ -73,6 +75,7 @@
         </label>
       </div>
     </fieldset>
+    <!-- .tip-options -->
 
     <div>
       <label data-unit="%">
@@ -102,6 +105,7 @@
       />
     </label>
   </fieldset>
+  <!-- .tip-inputs -->
 
   <div class="result-container">
     <div class="result-number">
@@ -131,9 +135,9 @@
       {/if}
       </p>
     </div>
-
     <button class="reset-btn" type="button" on:click={reset}>Reset</button>
   </div>
+  <!-- .result-container -->
 
 </form>
 </section>
@@ -190,7 +194,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: min(75ch, 100%);
+  max-width: min(60ch, 100%);
   margin: auto;
 }
 
@@ -199,14 +203,31 @@ h1 {
 }
 
 section {
-  --padding: 1.5rem;
+  --inner-padding: 1.5rem;
   --input-padding: 1rem;
   --border-radius: 1rem;
 
-  padding: var(--padding);
+  padding: var(--inner-padding);
   background: var(--surface-2);
   min-width: 100%;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  border-radius: calc(var(--border-radius) + var(--inner-padding)) calc(var(--border-radius) + var(--inner-padding)) 0 0;
+
+  @media (min-width: 768px) {
+    border-radius: var(--border-radius);
+  }
+
+  & > form {
+    @media (min-width: 768px) {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: stretch;
+      gap: 2rem;
+    }
+    & > * {
+      flex-grow: 1;
+    }
+  }
 }
 
 fieldset {
@@ -262,6 +283,10 @@ label:has(input[type='number'])::before {
   display: flex;
   flex-direction: column;
   gap: 1.125rem;
+
+  @media (min-width: 768px) {
+    max-width: calc(50% - 1rem);
+  }
 }
 
 .tip-options {
@@ -272,7 +297,7 @@ label:has(input[type='number'])::before {
   flex-wrap: wrap;
 
   & > div {
-    width: clamp(9rem, calc(50% - 0.5rem), 12rem);
+    width: calc(50% - 0.5rem);
   }
 }
 
@@ -308,12 +333,17 @@ label:has(input[type='radio']:is(:focus-visible)) {
 
 .result-container {
   background: var(--surface-4);
-  padding: var(--padding);
-  margin-top: calc(var(--padding) * 1.5);
-  border-radius: calc(var(--padding) - var(--border-radius));
+  padding: var(--inner-padding);
+  margin-top: calc(var(--inner-padding) * 1.5);
+  border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media (min-width: 768px) {
+    padding: calc(var(--inner-padding) * 2.5) calc(var(--inner-padding) * 1.5);
+    margin-top: 0;
+  }
 }
 
 .result-number {
@@ -341,15 +371,30 @@ label:has(input[type='radio']:is(:focus-visible)) {
 .reset-btn {
   text-transform: uppercase;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 0.5rem;
   border: none;
   border-radius: 0.25rem;
+  box-shadow: 0 5px 2px -2px black;
   background: var(--surface-5);
   color: var(--text-5);
   font-size: 1.25rem;
   font-weight: 700;
-  cursor: pointer;
   width: 100%;
+
+  transition: scale 0.2s ease-in-out;
+
+  @media (min-width: 768px) {
+    margin-top: auto;
+    align-self: self-end;
+  }
+
+  &:is(:hover){
+    scale: 1.02;
+  }
+
+  &:is(:active){
+    scale: 0.98;
+  }
 }
 
 /* Credit: Tailwind */
