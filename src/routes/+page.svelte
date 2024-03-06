@@ -224,15 +224,9 @@ section {
 
 form {
   @media (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    & > * {
-      flex-grow: 1;
-      max-width: calc(50% - 1rem);
-    }
   }
 }
 
@@ -306,10 +300,6 @@ label:has(input[type='number'])::before {
   flex-direction: column;
   gap: 1.125rem;
   padding-block: 1.5rem;
-
-  @media (min-width: 768px) {
-    max-width: calc(50% - 1rem);
-  }
 }
 
 .tip-options {
